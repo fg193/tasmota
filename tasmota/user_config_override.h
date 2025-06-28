@@ -117,12 +117,12 @@ Examples :
 #define USE_WEBSEND_RESPONSE                   // Enable command WebSend response message (+1k code)
 #define USE_WEBGETCONFIG                       // Enable restoring config from external webserver (+0k6)
 #define USE_WEBRUN                             // Enable executing a tasmota command file from external web server (+0.4 code)
-#define USE_GPIO_VIEWER                        // Enable GPIO Viewer to see realtime GPIO states (+6k code)
+//#define USE_GPIO_VIEWER                        // Enable GPIO Viewer to see realtime GPIO states (+6k code)
 #undef  USE_EMULATION_HUE                      // Enable Hue Bridge emulation for Alexa (+14k code, +2k mem common)
 #undef  USE_EMULATION_WEMO                     // Enable Belkin WeMo emulation for Alexa (+6k code, +2k mem common)
 
 // -- Ping ----------------------------------------
-#define USE_PING                                 // Enable Ping command (+2k code)
+//#define USE_PING                                 // Enable Ping command (+2k code)
 
 /*
 // -- Time ----------------------------------------
@@ -211,7 +211,8 @@ Examples :
 //  #define DS18x20_USE_ID_ALIAS                   // Add support aliasing for DS18x20 sensors. See comments in xsns_05 files (+0k5 code)
 
 // -- I2C sensors ---------------------------------
-#define USE_I2C                                  // I2C using library wire (+10k code, 0k2 mem, 124 iram)
+#ifdef USE_I2C
+#undef USE_I2C                                  // I2C using library wire (+10k code, 0k2 mem, 124 iram)
 #define I2CDRIVERS_0_31        0xFFFFFFFF          // Enable I2CDriver0  to I2CDriver31
 #define I2CDRIVERS_32_63       0xFFFFFFFF          // Enable I2CDriver32 to I2CDriver63
 #define I2CDRIVERS_64_95       0xFFFFFFFF          // Enable I2CDriver64 to I2CDriver95
@@ -239,7 +240,7 @@ Examples :
 //    #define USE_RX8010                           // [I2cDriver90] Enable RX8010 RTC - used by IOTTIMER - support both I2C buses on ESP32 (I2C address 0x32) (+0k7 code)
 //    #define USE_PCF85063                         // [I2cDriver92] Enable PCF85063 RTC support (I2C address 0x51)
 
-  #define USE_DISPLAY                            // Add I2C/TM1637/MAX7219 Display Support (+2k code)
+  #undef USE_DISPLAY                            // Add I2C/TM1637/MAX7219 Display Support (+2k code)
 //    #define USE_DISPLAY_MODES1TO5                // Enable display mode 1 to 5 in addition to mode 0
     // #define USE_DISPLAY_LCD                      // [DisplayModel 1] [I2cDriver3] Enable Lcd display (I2C addresses 0x27 and 0x3F) (+6k code)
     // REMOVED - #define USE_DISPLAY_SSD1306                  // [DisplayModel 2] [I2cDriver4] Enable SSD1306 Oled 128x64 display (I2C addresses 0x3C and 0x3D) (+16k code)
@@ -254,9 +255,9 @@ Examples :
                                                  //  where n is 0..4 (4 digits and middle :) and m is decimal for bitmap of which segment to turn on.
                                                  // Reference: https://cdn-learn.adafruit.com/downloads/pdf/adafruit-led-backpack.pdf
 //      #define SEVENSEG_ADDRESS1     0x70         // No longer used.  Use MTX_ADDRESS1 - MTX_ADDRESS8 instead to specify I2C address of sevenseg displays
-    #define USE_DISPLAY_SH1106                   // [DisplayModel 7] [I2cDriver6] Enable SH1106 Oled 128x64 display (I2C addresses 0x3C and 0x3D)
-    #define USE_DISPLAY_TM1650                   // [DisplayModel 20] [I2cDriver74] Enable TM1650 display (I2C addresses 0x24 - 0x27 and 0x34 - 0x37)
-    #define USE_DT_VARS                          // Display variables that are exposed in JSON MQTT strings e.g. in TelePeriod messages.
+    #undef USE_DISPLAY_SH1106                   // [DisplayModel 7] [I2cDriver6] Enable SH1106 Oled 128x64 display (I2C addresses 0x3C and 0x3D)
+    #undef USE_DISPLAY_TM1650                   // [DisplayModel 20] [I2cDriver74] Enable TM1650 display (I2C addresses 0x24 - 0x27 and 0x34 - 0x37)
+    #undef USE_DT_VARS                          // Display variables that are exposed in JSON MQTT strings e.g. in TelePeriod messages.
 //    #define MAX_DT_VARS     16                   // Defaults to 7
 //    #define USE_GRAPH                            // Enable line charts with displays
 //    #define NUM_GRAPHS     4                     // Max 16
@@ -271,13 +272,13 @@ Examples :
 //    #define USE_IOTTIMER                         // Enable TM1640 based IotTimer
 
 // -- Universal Display Driver ---------------------------------
-#define USE_UNIVERSAL_DISPLAY                   // New universal display driver for both I2C and SPI
+#undef USE_UNIVERSAL_DISPLAY                   // New universal display driver for both I2C and SPI
     #define MAX_TOUCH_BUTTONS 16                 // Virtual touch buttons
 
 // -- SPI sensors ---------------------------------
 //#define USE_SPI                                  // Hardware SPI using GPIO12(MISO), GPIO13(MOSI) and GPIO14(CLK) in addition to two user selectable GPIOs(CS and DC)
 
-#ifdef USE_SPI
+#undef USE_SPI
 //  #define USE_NRF24                              // Add SPI support for NRF24L01(+) (+2k6 code)
     #undef  USE_MIBLE                            // BLE-bridge for some Mijia-BLE-sensors (+4k7 code)
 //  #define USE_DISPLAY                            // Add SPI Display support for 320x240 and 480x320 TFT
@@ -288,10 +289,10 @@ Examples :
 //    #define USE_DISPLAY_RA8876                   // [DisplayModel 10] [I2cDriver39] (Touch)
 //    #define USE_DISPLAY_ST7789                   // [DisplayModel 12] Enable ST7789 module
     // REMOVED -- #define USE_DISPLAY_SSD1331                  // [DisplayModel 14] Enable SSD1331 module
-  #define USE_SPI_LORA                           // Add support for LoRaSend and LoRaCommand (+4k code)
-    #define USE_LORA_SX126X                      // Add driver support for LoRa on SX126x based devices like LiliGo T3S3 Lora32 (+16k code)
+//  #define USE_SPI_LORA                           // Add support for LoRaSend and LoRaCommand (+4k code)
+//    #define USE_LORA_SX126X                      // Add driver support for LoRa on SX126x based devices like LiliGo T3S3 Lora32 (+16k code)
 //    #define USE_LORA_SX127X                      // Add driver support for LoRa on SX127x based devices like M5Stack LoRa868, RFM95W (+5k code)
-    #define USE_LORAWAN_BRIDGE                   // Add support for LoRaWan bridge (+8k code)
+//    #define USE_LORAWAN_BRIDGE                   // Add support for LoRaWan bridge (+8k code)
 
 #endif  // USE_SPI
 
@@ -304,11 +305,11 @@ Examples :
 // #define USE_MODBUS_BRIDGE                        // Add support for software Modbus Bridge (+4.5k code)
 // #define USE_MODBUS_BRIDGE_TCP                    // Add support for software Modbus TCP Bridge (also enable Modbus TCP Bridge) (+2k code)
 // #define MODBUS_BRIDGE_TCP_DEFAULT_PORT 502       // Add support for software Modbus TCP Bridge (start the TCP bridge automatically at PORT 502)
-#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
+//#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
 
 //#define USE_OPENTHERM                            // Add support for OpenTherm (+15k code)
 //#define USE_LD2402                               // Add support for HLK-LD2402 24GHz human presence sensor module (+10k9 code, 320 RAM)
-#define USE_LD2410                               // Add support for HLK-LD2410 24GHz smart wave motion sensor (+3k7 code, 88 RAM)
+#undef USE_LD2410                               // Add support for HLK-LD2410 24GHz smart wave motion sensor (+3k7 code, 88 RAM)
 //#define USE_LD2410S                              // Add support for HLK-LD2410S Ultra Low-power 24GHz smart wave motion sensor (+4k7 code, 144 RAM)
 
 // -- Power monitoring sensors --------------------
@@ -338,7 +339,8 @@ Examples :
 //  #define IR_SEND_USE_MODULATION    true         // Do we do frequency modulation during transmission? i.e. If not, assume a 100% duty cycle.
 
   // ====> IR Full protocols are enabled with the line below
-  // #define USE_IR_REMOTE_FULL                     // Support all IR protocols from IRremoteESP8266
+  #define USE_IR_REMOTE_FULL                     // Support all IR protocols from IRremoteESP8266
+  /*
   //
   // WARNING: if you change any IR configuration, you need to clear Platform.io cache
   //          currently the include change detection does not work for these parameters
@@ -358,7 +360,6 @@ Examples :
   // (USE_IR_REMOTE, USE_IR_RECEIVE, USE_IR_HVAC...) are IGNORED.
   #define DECODE_ELECTRA_AC true
   #define SEND_ELECTRA_AC   true
-  /*
   #define USE_IR_SEND_NEC                        // Support IRsend NEC protocol
   #define USE_IR_SEND_RC5                        // Support IRsend Philips RC5 protocol
   #define USE_IR_SEND_RC6                        // Support IRsend Philips RC6 protocol
@@ -378,7 +379,7 @@ Examples :
 
 // -- Other sensors/drivers -----------------------
 
-#define USE_SHIFT595                             // Add support for 74xx595 8-bit shift registers (+0k7 code)
+//#define USE_SHIFT595                             // Add support for 74xx595 8-bit shift registers (+0k7 code)
 //  #define SHIFT595_INVERT_OUTPUTS false            // [SetOption133] Don't invert outputs of 74x595 shift register
 //  #define SHIFT595_DEVICE_COUNT  1                 // [Shift595DeviceCount] Set the number of connected 74x595 shift registers
 
