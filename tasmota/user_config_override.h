@@ -92,15 +92,15 @@ Examples :
 
 // -- Wireguard VPN support ------------------------
 // VPN support since v14.6.1
-//#define USE_WIREGUARD                            // Enable Wireguard VPN support (ESP8266: +28k code +0.9k mem, ESP32: +22k code +0.9k mem)
+#define USE_WIREGUARD                            // Enable Wireguard VPN support (ESP8266: +28k code +0.9k mem, ESP32: +22k code +0.9k mem)
 
 // -- Telegram Protocol ---------------------------
 //#define USE_TELEGRAM                             // Support for Telegram protocol (+49k code, +7.0k mem and +4.8k additional during connection handshake)
   #define USE_TELEGRAM_FINGERPRINT "\x4E\x7F\xF5\x6D\x1E\x29\x40\x58\xAB\x84\xDE\x63\x69\x7B\xCD\xDF\x44\x2E\xD2\xF6" // Telegram api.telegram.org TLS public key fingerpring
 
 // -- KNX IP Protocol -----------------------------
-//#define USE_KNX                                  // Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
-  #define USE_KNX_WEB_MENU                       // Enable KNX WEB MENU (+8.3k code, +144 mem)
+#undef  USE_KNX                                  // Enable KNX IP Protocol Support (+9.4k code, +3k7 mem)
+  #undef  USE_KNX_WEB_MENU                       // Enable KNX WEB MENU (+8.3k code, +144 mem)
 
 // -- Telnet --------------------------------------
 #define USE_TELNET                             // Add support for telnet (+2k code)
@@ -304,7 +304,7 @@ Examples :
 // #define USE_MODBUS_BRIDGE                        // Add support for software Modbus Bridge (+4.5k code)
 // #define USE_MODBUS_BRIDGE_TCP                    // Add support for software Modbus TCP Bridge (also enable Modbus TCP Bridge) (+2k code)
 // #define MODBUS_BRIDGE_TCP_DEFAULT_PORT 502       // Add support for software Modbus TCP Bridge (start the TCP bridge automatically at PORT 502)
-//#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
+#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
 
 //#define USE_OPENTHERM                            // Add support for OpenTherm (+15k code)
 //#define USE_LD2402                               // Add support for HLK-LD2402 24GHz human presence sensor module (+10k9 code, 320 RAM)
@@ -312,10 +312,10 @@ Examples :
 //#define USE_LD2410S                              // Add support for HLK-LD2410S Ultra Low-power 24GHz smart wave motion sensor (+4k7 code, 144 RAM)
 
 // -- Power monitoring sensors --------------------
-#undef  USE_ENERGY_SENSOR                        // Add support for Energy Monitors (+14k code)
-#undef  USE_ENERGY_MARGIN_DETECTION              // Add support for Energy Margin detection (+1k6 code)
-#undef  USE_ENERGY_DUMMY                         // Add support for dummy Energy monitor allowing user values (+0k7 code)
-#undef  USE_HLW8012                              // Add support for HLW8012, BL0937 or HJL-01 Energy Monitor for Sonoff Pow and WolfBlitz
+#define USE_ENERGY_SENSOR                        // Add support for Energy Monitors (+14k code)
+#define USE_ENERGY_MARGIN_DETECTION              // Add support for Energy Margin detection (+1k6 code)
+#define USE_ENERGY_DUMMY                         // Add support for dummy Energy monitor allowing user values (+0k7 code)
+#define USE_HLW8012                              // Add support for HLW8012, BL0937 or HJL-01 Energy Monitor for Sonoff Pow and WolfBlitz
 #undef  USE_CSE7766                              // Add support for CSE7766 Energy Monitor for Sonoff S31 and Pow R2
 #undef  USE_PZEM004T                             // Add support for PZEM004T Energy monitor (+2k code)
 #undef  USE_PZEM_AC                              // Add support for PZEM014,016 Energy monitor (+1k1 code)
@@ -400,5 +400,115 @@ Examples :
 //  #define USE_ALECTO_V2                          // Add support for decoding Alecto V2 sensors like ACH2010, WS3000 and DKW2012 weather stations using 868MHz RF sensor receiver (+1k7 code)
 
 //#define USE_PROMETHEUS                           // Add support for https://prometheus.io/ metrics exporting over HTTP /metrics endpoint
+
+// -- PID and Timeprop ------------------------------ // Both together will add +12k1 code
+// #define USE_TIMEPROP                            // Add support for the timeprop feature (+9k1 code)
+                                                   // For details on the configuration please see the header of tasmota/xdrv_48_timeprop.ino
+// #define USE_PID                                 // Add suport for the PID  feature (+11k2 code)
+                                                   // For details on the configuration please see the header of tasmota/xdrv_49_pid.ino
+// -- End of general directives ---------------------
+
+/*********************************************************************************************\
+ * ESP32 only features
+\*********************************************************************************************/
+
+#ifdef ESP32
+
+#define USE_ESP32_WDT                            // Enable Watchdog for ESP32, trigger a restart if loop has not responded for 5s, and if `yield();` was not called
+
+#define SET_ESP32_STACK_SIZE  (8 * 1024)         // Set the stack size for Tasmota. The default value is 8192 for Arduino, some builds might need to increase it
+
+#undef  USE_NETWORK_LIGHT_SCHEMES                // Add support for light schemes via DDP (via UDP on port 4048)
+
+//#define USE_SPI                                  // Add support for hardware SPI
+#define USE_MI_ESP32                             // Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
+#define USE_BLE_ESP32                            // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
+  //#define BLE_ESP32_ENABLE false                 // [SetOption115] Default value for SetOption115
+  //#define USE_IBEACON                            // Add support for Bluetooth LE passive scan of iBeacon devices (uses HM17 module)
+  //#define USE_IBEACON_ESP32                      // Add support for Bluetooth LE passive scan of iBeacon devices using the internal ESP32 Bluetooth module
+//#define USE_WEBCAM                               // Add support for webcam
+
+//#define USE_AUTOCONF                             // Enable Esp32 autoconf feature, requires USE_BERRY and USE_WEBCLIENT_HTTPS (12KB Flash)
+//#define USE_BERRY                                // Enable Berry scripting language
+  //#define USE_BERRY_PYTHON_COMPAT                // Enable by default `import python_compat`
+  //#define USE_BERRY_TIMEOUT             4000     // Timeout in ms, will raise an exception if running time exceeds this timeout
+  //#define USE_BERRY_PSRAM                        // Allocate Berry memory in PSRAM if PSRAM is connected - this might be slightly slower but leaves main memory intact
+  //#define USE_BERRY_IRAM                         // Allocate some data structures in IRAM (which is usually unused) when possible and if no PSRAM is available
+  //#define USE_BERRY_FAST_LOOP_SLEEP_MS  5        // Minimum time in milliseconds to before calling again `tasmota.fast_loop()`, a smaller value will consume more CPU (min 1ms)
+  #define USE_BERRY_DEBUG                        // Compile Berry bytecode with line number information, makes exceptions easier to debug. Adds +8% of memory consumption for compiled code
+  //   #define UBE_BERRY_DEBUG_GC                   // Print low-level GC metrics
+  #define USE_BERRY_INT64                        // Add 64 bits integer support (+1.7KB Flash)
+  //#define USE_WEBCLIENT_HTTPS                    // Enable HTTPS outgoing requests based on BearSSL (much ligher then mbedTLS, 42KB vs 150KB) in insecure mode (no verification of server's certificate)
+                                                 // Note that only two ciphers are enabled: ECDHE_RSA_WITH_AES_128_GCM_SHA256, ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+    //#define USE_BERRY_WEBCLIENT_USERAGENT  "TasmotaClient" // default user-agent used, can be changed with `wc.set_useragent()`
+    //#define USE_BERRY_WEBCLIENT_TIMEOUT  2000    // Default timeout in milliseconds
+    #undef  USE_BERRY_LEDS_PANEL                 // Add button to dynamically load the Leds Panel from a bec file online
+    //#define USE_BERRY_LEDS_PANEL_URL             "http://ota.tasmota.com/tapp/leds_panel.bec"
+    //#define USE_BERRY_LVGL_PANEL                 // Add button to dynamically load the LVGL Panel from a bec file online
+    //#define USE_BERRY_LVGL_PANEL_URL             "http://ota.tasmota.com/tapp/lvgl_panel.bec"
+    #define USE_BERRY_PARTITION_WIZARD           // Add a button to dynamically load the Partion Wizard from a bec file online (+1.3KB Flash)
+    //#define USE_BERRY_PARTITION_WIZARD_URL      "http://ota.tasmota.com/tapp/partition_wizard.bec"
+    #define USE_BERRY_GPIOVIEWER                 // Add a button to dynamocally load the GPIO Viewer from a bec file online
+    //#define USE_BERRY_GPIOVIEWER_URL            "http://ota.tasmota.com/tapp/gpioviewer.bec"
+  #define USE_BERRY_TCPSERVER                    // Enable TCP socket server (+0.6k)
+  #define USE_BERRY_ULP                          // Enable ULP (Ultra Low Power) support (+4.9k)
+  // Berry crypto extensions below:
+  // #define USE_BERRY_CRYPTO_AES_GCM               // enable AES GCM 256 bits
+  // #define USE_BERRY_CRYPTO_AES_CCM               // enable AES CCM 128 bits
+  // #define USE_BERRY_CRYPTO_AES_CTR               // enable AES CTR 256 bits
+  // #define USE_BERRY_CRYPTO_EC_P256               // enable EC P256r1
+  // #define USE_BERRY_CRYPTO_EC_C25519             // enable Elliptic Curve C C25519
+  // #define USE_BERRY_CRYPTO_SHA256                // enable SHA256 hash function
+  // #define USE_BERRY_CRYPTO_HMAC_SHA256           // enable HMAC SHA256 hash function
+  // #define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256    // PBKDF2 with HMAC SHA256, used in Matter protocol
+  // #define USE_BERRY_CRYPTO_HKDF_SHA256      // HKDF with HMAC SHA256, used in Matter protocol
+  // #define USE_BERRY_CRYPTO_SPAKE2P_MATTER   // SPAKE2+ used in Matter 1.0, complete name is SPAKE2+-P256-SHA256-HKDF-SHA256-HMAC-SHA256
+  // #define USE_BERRY_CRYPTO_RSA              // RSA primitives including JWT RS256 (3.9KB flash)
+#define USE_CSE7761                              // Add support for CSE7761 Energy monitor as used in Sonoff Dual R3
+
+// -- Matter protocol ---------------------------------
+  // #define USE_MATTER_DEVICE                      // Enable Matter device support (+380KB)
+                                                    // Enabled by default in standard ESP32 binary
+
+#endif  // ESP32
+
+/*********************************************************************************************\
+ * Debug features
+\*********************************************************************************************/
+
+//#define DEBUG_TASMOTA_CORE                       // Enable core debug messages
+//#define DEBUG_TASMOTA_DRIVER                     // Enable driver debug messages
+//#define DEBUG_TASMOTA_SENSOR                     // Enable sensor debug messages
+//#define USE_DEBUG_DRIVER                         // Use xdrv_99_debug.ino providing commands CpuChk, CfgXor, CfgDump, CfgPeek and CfgPoke
+
+/*********************************************************************************************\
+ * Profiling features
+\*********************************************************************************************/
+
+//#define USE_PROFILING                            // Enable profiling
+//#define PROFILE_THRESHOLD            70          // Minimum duration in milliseconds to start logging
+//#define USE_PROFILE_DRIVER                       // Enable driver profiling
+//#define USE_PROFILE_FUNCTION                     // Enable driver function profiling
+
+/*********************************************************************************************\
+ * Optional firmware configurations
+ * Select none or just one for optional features and sensors as configured in tasmota_configurations.h
+ * See RELEASENOTES.md for selected features
+\*********************************************************************************************/
+
+//#define FIRMWARE_LITE                            // Create tasmota-lite with no sensors
+//#define FIRMWARE_SENSORS                         // Create tasmota-sensors with useful sensors enabled
+//#define FIRMWARE_KNX_NO_EMULATION                // Create tasmota-knx with KNX but without Emulation
+//#define FIRMWARE_DISPLAYS                        // Create tasmota-display with display drivers enabled
+//#define FIRMWARE_IR                              // Create tasmota-ir with IR full protocols activated, and many sensors disabled
+//#define FIRMWARE_MINIMAL                         // Create tasmota-minimal as intermediate firmware for OTA-MAGIC
+
+/*********************************************************************************************\
+ * Safe guard when needed defines are not done in Platformio                                                         *
+\*********************************************************************************************/
+
+#ifndef OTA_URL
+  #define OTA_URL ""
+#endif
 
 #endif  // _USER_CONFIG_OVERRIDE_H_
