@@ -288,10 +288,10 @@ Examples :
 //    #define USE_DISPLAY_RA8876                   // [DisplayModel 10] [I2cDriver39] (Touch)
 //    #define USE_DISPLAY_ST7789                   // [DisplayModel 12] Enable ST7789 module
     // REMOVED -- #define USE_DISPLAY_SSD1331                  // [DisplayModel 14] Enable SSD1331 module
-//  #define USE_SPI_LORA                           // Add support for LoRaSend and LoRaCommand (+4k code)
-//    #define USE_LORA_SX126X                      // Add driver support for LoRa on SX126x based devices like LiliGo T3S3 Lora32 (+16k code)
+  #define USE_SPI_LORA                           // Add support for LoRaSend and LoRaCommand (+4k code)
+    #define USE_LORA_SX126X                      // Add driver support for LoRa on SX126x based devices like LiliGo T3S3 Lora32 (+16k code)
 //    #define USE_LORA_SX127X                      // Add driver support for LoRa on SX127x based devices like M5Stack LoRa868, RFM95W (+5k code)
-//    #define USE_LORAWAN_BRIDGE                   // Add support for LoRaWan bridge (+8k code)
+    #define USE_LORAWAN_BRIDGE                   // Add support for LoRaWan bridge (+8k code)
 
 #endif  // USE_SPI
 
@@ -304,7 +304,7 @@ Examples :
 // #define USE_MODBUS_BRIDGE                        // Add support for software Modbus Bridge (+4.5k code)
 // #define USE_MODBUS_BRIDGE_TCP                    // Add support for software Modbus TCP Bridge (also enable Modbus TCP Bridge) (+2k code)
 // #define MODBUS_BRIDGE_TCP_DEFAULT_PORT 502       // Add support for software Modbus TCP Bridge (start the TCP bridge automatically at PORT 502)
-//#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
+#define USE_TCP_BRIDGE                           //  Add support for Serial to TCP bridge (+1.3k code)
 
 //#define USE_OPENTHERM                            // Add support for OpenTherm (+15k code)
 //#define USE_LD2402                               // Add support for HLK-LD2402 24GHz human presence sensor module (+10k9 code, 320 RAM)
